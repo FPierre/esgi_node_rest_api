@@ -3,29 +3,16 @@
  */
 
 
-module.exports = function (app) {
-
-    app.get('/', function (req, res) {
-        req.session.login = ''
-        //req.session.destroy(); // makes mongoose-session fail
-        res.send('200');
-    });
-
-
-
-
-}
-
 module.exports = function(app){
-    app.server.post('/logout',
-        app.middleware.authenticated,
+    app.post('/logout',
+        app.middleware.isLoggedIn,
         function(req, res){
 
-            req.sessionID.destroy(callback);
+            req.session.destroy(callback);
 
             function callback(err,data)
             {
-                res.send();
+                res.send(200,"session destroyed");
             }
         });
 };

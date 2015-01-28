@@ -1,28 +1,37 @@
+var mongoose = require('mongoose')
+ObjectId = mongoose.Schema.ObjectId;
 module.exports = function(server) {
     var ElementSchema = server.mongoose.Schema({
         // Se faire un id unique sur un Number ou sur le name ?
-        id: Number,
+
         name: {
             type: String,
-            required: true
+            required: true,
+            unique : false
         },
         borrowingDate: {
             type: Date,
             required: true,
-            default: Date.now
+            default: Date.now,
+            unique: false
         },
         numberBorrowing: {
             type: Number,
-            required: true
+            unique: false
+        },
+
+        idOwner : {
+            type :ObjectId,
+            unique : false
         }
     });
 
-    ElementSchema.index({id:1}, {unique:true});
+    //ElementSchema.index({id:1}, {unique:true});
     ElementSchema.plugin(require('mongoose-timestamp'));
     
     ElementSchema.methods.toJSON = function() {
         return this.toObject();
     };
 
-    return server.mongoose.model('Element', ElementSchema);
+    return server.mongoose.model(server.referenceModel.Elements, ElementSchema);
 };

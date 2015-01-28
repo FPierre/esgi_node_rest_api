@@ -1,0 +1,37 @@
+
+module.exports = function(server)
+{
+    server.middleware = server.middleware || {};
+
+
+        server.middleware.NotExistInBase(req,res,next)
+        {
+
+            if(req.session.userId != null)
+            {
+                var bool =server.models.User.findById(req.session.userId,handleQueryResponse);
+
+                function handleQueryResponse(err,user)
+                {
+                    if(err){
+
+                        return false;
+                    }
+
+                    if(!user)
+                    {
+                        next();
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+            else
+            {
+                return;
+            }
+
+
+        }
+}
