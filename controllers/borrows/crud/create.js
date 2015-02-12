@@ -12,6 +12,8 @@ module.exports = function(server) {
         }
 
         var OtherUser = {};
+        var Element   = {};
+        var MyUser    = {};
 
         OtherUser.id = req.body.id;
         Element.id   = req.body.elementId;
