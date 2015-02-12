@@ -2,28 +2,39 @@ var mongoose = require('mongoose')
 ObjectId = mongoose.Schema.ObjectId;
 module.exports = function(server) {
     var ElementSchema = server.mongoose.Schema({
-        // Se faire un id unique sur un Number ou sur le name ?
 
-        name: {
+        name: {                 //nom d'un élément
             type: String,
             required: true,
             unique : false
         },
-        borrowingDate: {
-            type: Date,
+
+        type:{
+            type: String,
             required: true,
-            default: Date.now,
-            unique: false
+            unique : false
         },
-        numberBorrowing: {
-            type: Number,
-            unique: false
+
+        description:{
+            type:String,
+            required: false,
+            unique : false
+        },
+
+        available :{
+            type:Boolean,
+            required : false,
+            unique : false,
+            default : true
         },
 
         idOwner : {
             type :ObjectId,
             unique : false
         }
+
+
+
     });
 
     //ElementSchema.index({id:1}, {unique:true});
