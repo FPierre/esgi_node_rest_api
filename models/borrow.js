@@ -4,23 +4,35 @@ ObjectId = mongoose.Schema.ObjectId;
 
 module.exports = function(server) {
     var BorrowSchema = server.mongoose.Schema({
-        elementId: {
+        ElementId: {
             type: ObjectId,
             required: true,
             unique: false
         },
-        userId: {
+        UserId: {
             type: ObjectId,
             unique: false
         },
-        ownerId: {
+        OwnerId: {
             type: ObjectId,
             unique: false
         },
-        condition: {
+        Condition: {
             type: String,
             required: true,
             unique : false
+        },
+        BorrowDate: {
+            type: Date,
+            required: true,
+            default: Date.now,
+            unique: false
+        },
+        LendDate: {
+            type: Date,
+            required: true,
+            default: Date.now,
+            unique: false
         }
     });
 
