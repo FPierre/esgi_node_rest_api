@@ -41,7 +41,7 @@ module.exports = function(server) {
             }
         }
     });
-    server.post('/borrows/:id/restore/:action',server.middleware.isLoggedIn, function(req, res) {
+    server.put('/borrows/:id/restore/:action',server.middleware.isLoggedIn, function(req, res) {
         var borrowId;
         var borrow;
         var choice;
