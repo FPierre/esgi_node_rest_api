@@ -70,8 +70,6 @@ module.exports = function(server) {
         else {
             res.send(401, "need password, name and mail");
         }
-    };
-        }
     });
 
     /**
