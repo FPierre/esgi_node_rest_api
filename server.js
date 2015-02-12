@@ -6,6 +6,7 @@ var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 
 var server = Express();
+
 server.use(bodyParser.json());
 server.use(session({
         secret: 'S3CR3T',
@@ -20,7 +21,8 @@ server.use(session({
 
 server.referenceModel = {};
 server.referenceModel.Users = "users";
-server.referenceModel.Elements = "Element"
+server.referenceModel.Elements = "Element";
+server.referenceModel.Borrows  = "Borrow";
 
 server.totalElements =  [];
 

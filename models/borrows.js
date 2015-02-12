@@ -17,7 +17,7 @@ module.exports = function(server) {
             type: ObjectId,
             unique: false
         },
-        Condition: {
+        Status: {
             type: String,
             required: true,
             unique : false
