@@ -19,6 +19,7 @@ module.exports = function(server) {
                 // Si la donnée est égale à null
                 params.LendDate = null;
             }
+            // On lance la recherche
             server.models.Borrow.find(params,handleQueryResponse);
 
             function handleQueryResponse(err,data)
