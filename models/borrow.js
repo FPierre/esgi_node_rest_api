@@ -31,7 +31,7 @@ module.exports = function(server) {
         LendDate: {
             type: Date,
             required: true,
-            default: Date.now,
+            default: null,
             unique: false
         }
     });
