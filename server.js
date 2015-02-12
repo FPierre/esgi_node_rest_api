@@ -22,19 +22,13 @@ server.referenceModel = {};
 server.referenceModel.Users = "users";
 server.referenceModel.Elements = "Element"
 
+server.totalElements =  [];
+
 require('./models')(server);
 require('./middleware')(server);
 require('./controllers')(server);
 
 
-
-
-
-
-
-
 server.listen(3000);
-
-
 
 console.log('Magic happens on port 3000');

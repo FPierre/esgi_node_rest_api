@@ -5,18 +5,15 @@ var bodyParser = require('body-parser').json();
  * Created by thierryallardsaintalbin on 22/12/14.
  */
 
-module.exports = function (app) {
+module.exports = function (server) {
 
-
-
-    var err = {};
 
     /**
      * get
      * Gets signin page
      */
 
-    app.get('/login', function (req, res)
+    server.get('/login', function (req, res)
     {
         console.log(req.session)
         res.send('200');
@@ -27,10 +24,10 @@ module.exports = function (app) {
      * signs in application
      */
 
-    app.post('/login', function (req,res){
+    server.post('/login', function (req,res){
         var NewUser ={};
 
-        var request = app.models.User.findOne({
+        var request = server.models.User.findOne({
             Mail: req.body.mail,
             Password:sha1(req.body.password)
         }, handleQueryResponse);

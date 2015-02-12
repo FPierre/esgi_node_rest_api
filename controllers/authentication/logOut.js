@@ -3,9 +3,9 @@
  */
 
 
-module.exports = function(app){
-    app.post('/logout',
-        app.middleware.isLoggedIn,
+module.exports = function(server){
+    server.post('/logout',
+        server.middleware.isLoggedIn,
         function(req, res){
 
             req.session.destroy(callback);
