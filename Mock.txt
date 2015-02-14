@@ -1,0 +1,65 @@
+Jeux de test :
+
+// Création utilisateur thierry
+// POST /signup
+
+{
+"name":"thierry",
+"mail":"thierry.allardsaintalbin@gmail.com",
+"password":"thierry"
+}
+
+// Ajout 1 DVD à thierry
+// POST /elements
+
+{
+"name":"Gran Torino",
+"type":"DVD",
+"description":"Réalisateur: Clint Eastwood"
+}
+
+// Déconnexion de l'utilisateur thierry
+// POST /logout
+
+// Création utilisateur pierre
+// POST /signup
+
+{
+"name":"pierre",
+"mail":"pflauder@gmail.com",
+"password":"pierre"
+}
+
+// Ajout 2 DVD à pierre
+// POST /elements
+
+{
+"name":"Le Silence des agneaux",
+"type":"DVD",
+"description":"Date de sortie: lundi 23 août 2010"
+}
+
+{
+"name":"Shining",
+"type":"DVD",
+"description":""
+
+// Modification element
+// PUT /elements/:id
+
+{
+"name":"Shining",
+"type":"DVX",
+"description":""
+}
+
+// Liste des elements diponibles sur le réseau
+// GET /elements
+
+// Utilisateur pierre fait une demande à l'utilisateur thierry
+// POST /user/:id/borrows
+
+{
+"elementId":"54dda50c77ff6d0b0c264e67"
+}
+

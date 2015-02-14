@@ -4,8 +4,8 @@ module.exports = function(server) {
      *
      * Paramètres body : {elementId=100}
      */
-    server.post('/user/:id/borrow', server.middleware.isLoggedIn, function(req, res) {
-        if (req.body.elementId == undefined || req.body.elementId == null) {
+    server.post('/user/:id/borrows', server.middleware.isLoggedIn, function(req, res) {
+        if (req.body.elementId == undefined) {
             res.send(500, err.toString());
 
             return;
@@ -13,14 +13,14 @@ module.exports = function(server) {
 
         var OtherUser = {};
         var Element   = {};
-        var MyUser    = {};
+        var Owner     = {};
 
-        OtherUser.id = req.body.id;
-        Element.id   = req.body.elementId;
-        MyUser.id    = req.session.userId;
+        OtherUser._id = req.params.id;
+        Element._id   = req.body.elementId;
+        Owner._id     = req.session.userId;
 
         // Cherche l'utilisateur à qui la demande est adressée
-        server.models.User.findOne({id: OtherUser.id}, function(err, data) {
+        server.models.User.findOne({_id: OtherUser._id}, function(err, data) {
             if (err) {
                 res.send(500, err.toString());
 
@@ -29,9 +29,9 @@ module.exports = function(server) {
             else {
                 OtherUser = data;
 
-                if (OtherUser) {
+                if (OtherUser._id != undefined) {
                     // Cherche l'élément pour lequel la demande d'emprunt est faite
-                    server.models.Element.findOne({id: Element.id}, function(err, data) {
+                    server.models.Element.findOne({_id: Element._id}, function(err, data) {
                         if (err) {
                             res.send(500, err.toString());
 
@@ -40,14 +40,14 @@ module.exports = function(server) {
                         else {
                             Element = data;
 
-                            if (Element) {
-                                console.log('Creating a borrow with OtherUser.id = ' + OtherUser.id + ', OwnerId = ' + Owner.id +
-                                    ' and Element.id = ' + Element.id);
+                            if (Element._id != undefined) {
+                                console.log('Creating a borrow with OtherUser._id = ' + OtherUser._id + ', OwnerId = ' + Owner._id +
+                                    ' and Element.id = ' + Element._id);
                                 var newBorrow = {};
 
-                                newBorrow.ElementId = Element.id;
-                                newBorrow.UserId    = OtherUser.id;
-                                newBorrow.OwnerId   = MyUser.id;
+                                newBorrow.ElementId = Element._id;
+                                newBorrow.UserId    = OtherUser._id;
+                                newBorrow.OwnerId   = Owner._id;
 
                                 var newBorrow = server.models.Borrow(newBorrow);
 
@@ -62,6 +62,11 @@ module.exports = function(server) {
                             }
                         }
                     });
+                }
+                else {
+                    res.send(500, 'No user found');
+
+                    return;
                 }
             }
         });
