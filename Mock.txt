@@ -60,6 +60,19 @@ Jeux de test :
 // POST /user/:id/borrows
 
 {
-"elementId":"54dda50c77ff6d0b0c264e67"
+"elementId":""
 }
 
+// Déconnexion de l'utilisateur pierre
+// POST /logout
+
+// Connexion de l'utilisateur thierry
+// POST /login
+
+{
+"mail":"thierry.allardsaintalbin@gmail.com",
+"password":"thierry"
+}
+
+// Acceptation de la demande
+// PUT /user/:userId/borrows/:borrowId/request/:action
