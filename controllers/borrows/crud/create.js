@@ -19,6 +19,13 @@ module.exports = function(server) {
         Element._id   = req.body.elementId;
         Owner._id     = req.session.userId;
 
+        // Si l'utilisateur qui demande et qui reçoit la demande d'emprunt est le même
+        if (OtherUser._id == Owner._id) {
+            res.send(500, 'Same users requested');
+
+            return;
+        }
+
         // Cherche l'utilisateur à qui la demande est adressée
         server.models.User.findOne({_id: OtherUser._id}, function(err, data) {
             if (err) {
@@ -48,6 +55,7 @@ module.exports = function(server) {
                                 newBorrow.ElementId = Element._id;
                                 newBorrow.UserId    = OtherUser._id;
                                 newBorrow.OwnerId   = Owner._id;
+                                newBorrow.Status    = 'requesting';
 
                                 var newBorrow = server.models.Borrow(newBorrow);
 

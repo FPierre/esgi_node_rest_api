@@ -15,13 +15,13 @@ module.exports = function(server) {
         var OtherUser = {};
         var Borrow    = {};
 
-        OtherUser.id = req.params.userId;
-        Borrow.id    = req.params.borrowId;
+        OtherUser._id = req.params.userId;
+        Borrow._id    = req.params.borrowId;
 
         var action = req.params.action;
 
         // Cherche l'utilisateur à qui la demande est adressée
-        server.models.User.findOne({id: OtherUser.id}, function(err, data) {
+        server.models.User.findOne({_id: OtherUser._id}, function(err, data) {
             if (err) {
                 res.send(500, err.toString());
 
@@ -30,9 +30,9 @@ module.exports = function(server) {
             else {
                 OtherUser = data;
 
-                if (OtherUser) {
+                if (OtherUser._id != undefined) {
                     // Cherche l'emprunt pour lequel la demande est faite
-                    server.models.Borrow.findOne({id: Borrow.id}, function(err, data) {
+                    server.models.Borrow.findOne({_id: Borrow._id}, function(err, data) {
                         if (err) {
                             res.send(500, err.toString());
 
@@ -41,7 +41,7 @@ module.exports = function(server) {
                         else {
                             Borrow = data;
 
-                            if (Borrow) {
+                            if (Borrow._id != undefined) {
                                 switch (action) {
                                     case 'validated':
                                         Borrow.Status = 'validated';
