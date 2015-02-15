@@ -24,7 +24,7 @@ module.exports = function (server) {
      * signs in application
      */
 
-    server.post('/login', function (req,res){
+    server.post('/login',server.middleware.isAnEmail, function (req,res){
         var NewUser ={};
 
         var request = server.models.User.findOne({
