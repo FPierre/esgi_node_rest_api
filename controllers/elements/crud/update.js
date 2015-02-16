@@ -20,7 +20,9 @@ module.exports = function(server) {
 
         console.log(req.body);
         MyNewElements = new server.models.Element(MyNewElements);
-        server.models.Element.findOneAndUpdate( {_id : MyNewElements._id , idOwner : MyNewElements.idOwner},{ name : MyNewElements.name,type : MyNewElements.type, description : MyNewElements.description} ,onElementModified);
+        server.models.Element.findOneAndUpdate( {_id : MyNewElements._id , idOwner : MyNewElements.idOwner},
+            { name : MyNewElements.name,type : MyNewElements.type, description : MyNewElements.description} ,
+            onElementModified);
 
         function onElementModified(err,data) {
             if (err) {

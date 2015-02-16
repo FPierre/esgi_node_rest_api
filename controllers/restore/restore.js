@@ -30,10 +30,12 @@ module.exports = function(server) {
 
                     function onBorrowUpdated(err, myBorrow) {
                         if (err) {
+                            // message générique
                             res.send(500, err.toString());
                             return;
                         }
                         else {
+                            // 200
                             res.send(myBorrow.toJSON());
                         }
                     }
@@ -73,6 +75,7 @@ module.exports = function(server) {
                             return;
                         }
                         else {
+                            // 200
                             res.send(myBorrow.toJSON());
                         }
                     }

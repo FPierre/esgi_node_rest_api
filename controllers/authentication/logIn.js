@@ -39,7 +39,8 @@ module.exports = function (server) {
             }
             if(!user)
             {
-                res.send(500,"you are not registered in the database");
+                // On recupere ici une 401 si l'utilisateur a mal saisi son login ou son mot de passe
+                res.send(401,"you are not registered in the database");
                 return ;
             }
             else

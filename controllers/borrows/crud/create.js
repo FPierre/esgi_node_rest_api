@@ -21,6 +21,7 @@ module.exports = function(server) {
 
         // Si l'utilisateur qui demande et qui reçoit la demande d'emprunt est le même
         if (OtherUser._id == Owner._id) {
+            // Erreur 400 car mauvais fonctionnement (500 est une erreur du serveur en interne pas une erreur dite metier
             res.send(500, 'Same users requested');
 
             return;
@@ -29,6 +30,7 @@ module.exports = function(server) {
         // Cherche l'utilisateur à qui la demande est adressée
         server.models.User.findOne({_id: OtherUser._id}, function(err, data) {
             if (err) {
+                // Ajouter un message générique car faille de securité
                 res.send(500, err.toString());
 
                 return;
@@ -64,6 +66,7 @@ module.exports = function(server) {
                                         res.send(500, err.toString());
                                     }
                                     else {
+                                        // 200 implicite
                                         res.send(borrow.toJSON());
                                     }
                                 });

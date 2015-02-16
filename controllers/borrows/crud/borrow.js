@@ -51,6 +51,7 @@ module.exports = function(server) {
                                         break;
                                     default:
                                         console.log('Action ' + action + ' is not allowed to modified a borrow status.');
+                                        // Ici 403 pour la non habilitation de l'utilisateur a acceder a cette fonctionnalité
                                         res.send(500, err.toString());
 
                                         return;
@@ -62,6 +63,7 @@ module.exports = function(server) {
                                         res.send(500, err.toString());
                                     }
                                     else {
+                                        // 200
                                         res.send(borrow.toJSON());
                                     }
                                 });
