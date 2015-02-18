@@ -11,7 +11,7 @@ module.exports = function(server)
     {
 
         if( !req.session.userId){
-            res.send(401," you must be authenticated");
+            res.send(401,{message:"You must be authenticated"});
 
 
             return;
@@ -24,14 +24,14 @@ module.exports = function(server)
             function handleQueryResponse(err,user)
             {
                 if(err){
-                    res.send(500,"Something went wrong",err);
+                    res.send(500,{errorMessage:"Something went wrong"},err);
                     return ;
                 }
 
 
                 if(!user)
                 {
-                    res.send(404,"try again");
+                    res.send(404,{errorMessage:"try again"});
                     return ;
                 }
 

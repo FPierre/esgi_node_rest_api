@@ -34,20 +34,20 @@ module.exports = function (server) {
 
         function handleQueryResponse(err,user){
             if(err){
-                res.send(500,"Something went wrong",err);
+                res.send(500,{errorMsg:"Something went wrong"},err);
                 return ;
             }
             if(!user)
             {
                 // On recupere ici une 401 si l'utilisateur a mal saisi son login ou son mot de passe
-                res.send(401,"you are not registered in the database");
+                res.send(401,{errorMsg:"you are not registered in the database"});
                 return ;
             }
             else
             {
 
                 req.session.userId = user._id;
-                res.status(202).send("you sign in");
+                res.status(202).send({message:"you sign in"});
                 return ;
             }
         }

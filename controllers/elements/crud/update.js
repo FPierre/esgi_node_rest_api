@@ -26,7 +26,9 @@ module.exports = function(server) {
 
         function onElementModified(err,data) {
             if (err) {
-                res.send(500, err.toString())
+                // mauvaise pratique d'envoyer l'erreur comme cela il faut le remplacer par un message générique
+                //res.send(500, err.toString());
+                res.send(500,{errorMessage:"Oops Something wrong with the server"});
                 return;
             }
             else {
@@ -39,7 +41,7 @@ module.exports = function(server) {
                     }
                     return element;
                 });
-                res.send(202, "Element has been modified .\n'" + server.totalElements  + "'");
+                res.send(202, {message:"Element has been modified .\n'" + server.totalElements  + "'"});
                 return;
             }
         }

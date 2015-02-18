@@ -23,12 +23,14 @@ module.exports = function(server) {
             if(err)
             {
                 // erreur
-                res.send(500, err.toString());
+                // mauvaise pratique d'envoyer l'erreur comme cela il faut le remplacer par un message générique
+                //res.send(500, err.toString());
+                res.send(500,{errorMessage:"Oops Something wrong with the server"});
                 return;
             }
             else {
                 // 200
-                res.send(data);
+                res.status(200).send(data);
             }
         }
     });

@@ -12,7 +12,7 @@ module.exports = function(server){
 
             function callback(err,data)
             {
-                res.send(200,"session destroyed");
+                res.send(200,{message:"session destroyed"});
             }
         });
 };

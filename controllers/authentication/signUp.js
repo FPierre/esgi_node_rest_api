@@ -51,7 +51,7 @@ function createUser(server)
             return;
         }
         else {
-            res.send(401, "need password, name and mail");
+            res.send(401, {errorMessage:"need password, name and mail"});
         }
     };
 }
@@ -71,7 +71,7 @@ function NotInBase(server) {
 
         function handleQueryResponse(err,user){
             if(err){
-                res.send(500,"Something went wrong",err);
+                res.send(500,{errorMessage:"Something went wrong"},err);
                 return ;
             }
             if(!user)
@@ -81,7 +81,7 @@ function NotInBase(server) {
             }
             else
             {
-                res.send(500,"there is a user registered in the database with these information",err);
+                res.send(500,{errorMessage:"there is a user registered in the database with these information"},err);
                 return;
             }
         }

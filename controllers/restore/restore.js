@@ -18,7 +18,9 @@ module.exports = function(server) {
             {
                 if(err)
                 {
-                    res.send(500, err.toString());
+                    // mauvaise pratique d'envoyer l'erreur comme cela il faut le remplacer par un message générique
+                    //res.send(500, err.toString());
+                    res.send(500,{errorMessage:"Oops Something wrong with the server"});
                     return;
                 }
                 else {
@@ -30,13 +32,15 @@ module.exports = function(server) {
 
                     function onBorrowUpdated(err, myBorrow) {
                         if (err) {
-                            // message générique
-                            res.send(500, err.toString());
+                            // message génériqu
+                            // mauvaise pratique d'envoyer l'erreur comme cela il faut le remplacer par un message générique
+                            //res.send(500, err.toString());
+                            res.send(500,{errorMessage:"Oops Something wrong with the server"});
                             return;
                         }
                         else {
                             // 200
-                            res.send(myBorrow.toJSON());
+                            res.send(200, myBorrow.toJSON());
                         }
                     }
                 }
@@ -60,7 +64,9 @@ module.exports = function(server) {
             {
                 if(err)
                 {
-                    res.send(500, err.toString());
+                    // mauvaise pratique d'envoyer l'erreur comme cela il faut le remplacer par un message générique
+                    //res.send(500, err.toString());
+                    res.send(500,{errorMessage:"Oops Something wrong with the server"});
                     return;
                 }
                 else {
@@ -71,12 +77,14 @@ module.exports = function(server) {
                     borrow.save(onBorrowUpdated);
                     function onBorrowUpdated(err, myBorrow) {
                         if (err) {
-                            res.send(500, err.toString());
+                            // mauvaise pratique d'envoyer l'erreur comme cela il faut le remplacer par un message générique
+                            //res.send(500, err.toString());
+                            res.send(500,{errorMessage:"Oops Something wrong with the server"});
                             return;
                         }
                         else {
                             // 200
-                            res.send(myBorrow.toJSON());
+                            res.send(200, myBorrow.toJSON());
                         }
                     }
                 }

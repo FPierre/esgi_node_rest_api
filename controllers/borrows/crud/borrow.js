@@ -34,7 +34,9 @@ module.exports = function(server) {
                     // Cherche l'emprunt pour lequel la demande est faite
                     server.models.Borrow.findOne({_id: Borrow._id}, function(err, data) {
                         if (err) {
-                            res.send(500, err.toString());
+                            // mauvaise pratique d'envoyer l'erreur comme cela il faut le remplacer par un message générique
+                            //res.send(500, err.toString());
+                            res.send(500,{errorMessage:"Oops Something wrong with the server"});
 
                             return;
                         }
@@ -60,11 +62,13 @@ module.exports = function(server) {
 
                                 Borrow.save(function(err, borrow) {
                                     if (err) {
-                                        res.send(500, err.toString());
+                                        // mauvaise pratique d'envoyer l'erreur comme cela il faut le remplacer par un message générique
+                                        //res.send(500, err.toString());
+                                        res.send(500,{errorMessage:"Oops Something wrong with the server"});
                                     }
                                     else {
                                         // 200
-                                        res.send(borrow.toJSON());
+                                        res.send(200, borrow.toJSON());
                                     }
                                 });
                             }
