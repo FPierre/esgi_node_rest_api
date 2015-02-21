@@ -75,4 +75,4 @@ Jeux de test :
 }
 
 // Acceptation de la demande
-// PUT /user/:userId/borrows/:borrowId/request/:action
+// PUT /borrows/:borrowId/request/:action

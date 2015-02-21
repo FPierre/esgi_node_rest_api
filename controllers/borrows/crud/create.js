@@ -6,7 +6,7 @@ module.exports = function(server) {
      */
     server.post('/user/:id/borrows', server.middleware.isLoggedIn, function(req, res) {
         if (req.body.elementId == undefined) {
-            res.send(500, err.toString());
+            res.send(500, {errorMessage: 'No elementId'});
 
             return;
         }
@@ -21,17 +21,15 @@ module.exports = function(server) {
 
         // Si l'utilisateur qui demande et qui reçoit la demande d'emprunt est le même
         if (OtherUser._id == Owner._id) {
-            // Erreur 400 car mauvais fonctionnement (500 est une erreur du serveur en interne pas une erreur dite metier
-            //res.send(500, 'Same users requested');
-            res.send(400, {errorMsg:'Same users requested'});
+            res.send(400, {errorMessage: 'Same users requested'});
+
             return;
         }
 
         // Cherche l'utilisateur à qui la demande est adressée
         server.models.User.findOne({_id: OtherUser._id}, function(err, data) {
             if (err) {
-                // Ajouter un message générique car faille de securité
-                res.send(500, err.toString());
+                res.send(500, {errorMessage: 'Oops, something wrong with the server'});
 
                 return;
             }
@@ -42,9 +40,7 @@ module.exports = function(server) {
                     // Cherche l'élément pour lequel la demande d'emprunt est faite
                     server.models.Element.findOne({_id: Element._id}, function(err, data) {
                         if (err) {
-                            // mauvaise pratique d'envoyer l'erreur comme cela il faut le remplacer par un message générique
-                            //res.send(500, err.toString());
-                            res.send(500,{errorMessage:"Oops Something wrong with the server"});
+                            res.send(500, {errorMessage: 'Oops, something wrong with the server'});
 
                             return;
                         }
@@ -65,12 +61,9 @@ module.exports = function(server) {
 
                                 newBorrow.save(function(err, borrow) {
                                     if (err) {
-                                        // mauvaise pratique d'envoyer l'erreur comme cela il faut le remplacer par un message générique
-                                        //res.send(500, err.toString());
-                                        res.send(500,{errorMessage:"Oops Something wrong with the server"});
+                                        res.send(500, {errorMessage: 'Oops, something wrong with the server'});
                                     }
                                     else {
-                                        // 200 implicite
                                         res.send(200, borrow.toJSON());
                                     }
                                 });
@@ -79,9 +72,7 @@ module.exports = function(server) {
                     });
                 }
                 else {
-                    // Ce n'est pas une 500
-                    //res.send(500, 'No user found');
-                    res.send(400, {errorMessage:'No user found'});
+                    res.send(400, {errorMessage: 'No user found'});
 
                     return;
                 }
