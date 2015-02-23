@@ -18,6 +18,13 @@ module.exports = function(server) {
 
         var action = req.params.action;
 
+        // Si l'utilisateur qui accepte ou refuse la demande n'est pas le même que celui à la demande est adressée
+        if (req.session.userId != Borrow.UserId) {
+            res.send(400, {errorMessage: 'User not allowed to access to this borrow'});
+
+            return;
+        }
+
         // Cherche l'emprunt pour lequel la demande est faite
         server.models.Borrow.findOne({_id: Borrow._id}, function(err, data) {
             if (err) {
