@@ -11,7 +11,7 @@ var sha1 = require('sha1');
 module.exports = function(server) {
 
 
-    server.post('/signup',bodyParser ,NotInBase(server), createUser(server));
+    server.post('/signup',bodyParser,server.middleware.isAnEmail ,NotInBase(server), createUser(server));
 
 
     server.get('/signup', function (req, res) {
