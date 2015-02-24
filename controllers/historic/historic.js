@@ -30,7 +30,7 @@ module.exports = function(server) {
             }
             else {
                 // 200
-                res.status(200).send(data);
+                res.send(200,data);
             }
         }
     });

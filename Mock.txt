@@ -43,6 +43,7 @@ Jeux de test :
 "name":"Shining",
 "type":"DVD",
 "description":""
+}
 
 // Modification element
 // PUT /elements/:id
@@ -76,3 +77,87 @@ Jeux de test :
 
 // Acceptation de la demande
 // PUT /borrows/:borrowId/request/:action
+
+
+/* Jeux de test partie Nico */
+
+// Création de l'utilisateur Nicolas
+// POST /signup
+
+{
+"name":"Nico",
+"mail":"njouraud@hotmail.fr",
+"password":"nico"
+}
+
+// Connexion avec l'utilisateur Nicolas
+// POST /login
+
+{
+"mail":"njouraud@hotmail.fr",
+"password":"nico"
+}
+
+// Ajout 3 DVD à Nico
+// POST /elements
+
+{
+"name":"Star wars 4",
+"type":"DVD",
+"description":"Date de sortie: il y a longtemps...."
+}
+
+{
+"name":"Star wars 5",
+"type":"DVD",
+"description":"Date de sortie: il y a un peu moins longtemps...."
+}
+
+{
+"name":"Star wars 6",
+"type":"DVD",
+"description":"Il est son père!"
+}
+
+
+// Liste des elements diponibles sur le réseau
+// GET /elements
+
+// Utilisateur pierre fait une demande à l'utilisateur pierre
+// POST /user/:id/borrows   ?? Comment reconnais t on l'id user?
+
+{
+"elementId":"" // Et l'element id? Il faut l'avoir en get non?
+}
+
+// Liste des elements diponibles sur le réseau
+// GET /elements
+
+// Utilisateur Nico fait une demande à l'utilisateur pierre
+// POST /user/:id/borrows   ?? Comment reconnais t on l'id user?
+
+{
+"elementId":"" // Et l'element id? Il faut l'avoir en get non?
+}
+
+// Accepter l'emprunt avec un autre user
+
+
+// Faire le retour de l'objet
+// POST /borrows/:id/restore
+
+// Accepter le retour de l'objet
+
+
+// Demande d'historique des emprunts de l'utilisateur Nico
+// GET /borrows/borrowing
+
+
+
+// Demande d'historique des prets de l'utilisateur Nico
+// GET /borrows/lending
+
+// Demande de Restore
+
+// Déconnexion de l'utilisateur Nico
+// POST /logout
