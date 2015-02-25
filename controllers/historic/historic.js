@@ -5,21 +5,25 @@ module.exports = function(server) {
     server.get('/borrows/:type',server.middleware.isLoggedIn, function(req, res) {
         // On récupère notre id
         var userId = req.session.userId;
+        var type = req.params.type;
         var params = {};
-        params.owner_id = userId;
-        params.type = req.params.type;
-        if(params.type === "lending") {
+        params.OwnerId = userId;
+        if(type === "lending") {
             // Si la donnée est différente de null
             params.LendDate = {$exists: true};
+            params.Status = "closed";
         } else {
             // Si la donnée est égale à null
+            params.Status = "validated";
             params.LendDate = null;
         }
+        console.log(params);
         // On lance la recherche
         server.models.Borrow.find(params,handleQueryResponse);
 
         function handleQueryResponse(err,data)
         {
+            console.log(data);
             if(err)
             {
                 // erreur

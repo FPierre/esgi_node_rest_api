@@ -1,13 +1,10 @@
 /**
  * Created by Save92 on 12/02/15.
  */
-var restore = [];
-
 module.exports = function(server) {
     server.post('/borrows/:id/restore',server.middleware.isLoggedIn, function(req, res) {
         var borrowId;
         var borrow;
-
         // On récupère l'emprunt concerné
         borrowId = req.params.id;
         if (borrowId) {
@@ -20,7 +17,7 @@ module.exports = function(server) {
                 {
                     // mauvaise pratique d'envoyer l'erreur comme cela il faut le remplacer par un message générique
                     //res.send(500, err.toString());
-                    res.send(500,{errorMessage:"Oops Something wrong with the server"});
+                    res.send(500,{errorMessage:"Oops Something wrong with the server"} + err);
                     return;
                 }
                 else {
@@ -35,7 +32,7 @@ module.exports = function(server) {
                             // message génériqu
                             // mauvaise pratique d'envoyer l'erreur comme cela il faut le remplacer par un message générique
                             //res.send(500, err.toString());
-                            res.send(500,{errorMessage:"Oops Something wrong with the server"});
+                            res.send(500, {errorMessage: "Oops Something wrong with the server"});
                             return;
                         }
                         else {
@@ -55,7 +52,7 @@ module.exports = function(server) {
         // On récupère l'emprunt concerné
         borrowId = req.params.id;
         // On recupere l'action a effectuer
-        action = req.params.action;
+        choice = req.params.action;
         if (borrowId) {
             // On recupere notre emprunt par son id
             server.models.Borrow.findById(borrowId,handleQueryResponse);
@@ -72,7 +69,16 @@ module.exports = function(server) {
                 else {
                     borrow = data;
                     // On test selon si l'action est valid ou invalid le status de l'emprunt correspondant
-                    borrow.Status = action == "valid" ? "closed" : "borrowing";
+                    if (choice == "valid") {
+                        borrow.Status = "closed";
+                        borrow.LendDate = Date.now;
+                    } else if(choice == "invalid") {
+                        borrow.Status = "borrowing";
+                    } else {
+                        res.send(400, "Bad action");
+                        return;
+                    }
+                    //borrow.Status = choice == "valid" ? "closed" : "borrowing";
                     // On sauvegarde l'emprunt modifié
                     borrow.save(onBorrowUpdated);
                     function onBorrowUpdated(err, myBorrow) {

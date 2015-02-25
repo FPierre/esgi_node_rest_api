@@ -9,6 +9,13 @@ Jeux de test :
 "password":"thierry"
 }
 
+// Login Thierry
+// POST /Login
+{
+"mail":"thierry.allardsaintalbin@gmail.com",
+"password":"thierry"
+}
+
 // Ajout 1 DVD à thierry
 // POST /elements
 
@@ -26,6 +33,13 @@ Jeux de test :
 
 {
 "name":"pierre",
+"mail":"pflauder@gmail.com",
+"password":"pierre"
+}
+
+// Login Pierre
+// POST /Login
+{
 "mail":"pflauder@gmail.com",
 "password":"pierre"
 }
@@ -78,6 +92,8 @@ Jeux de test :
 // Acceptation de la demande
 // PUT /borrows/:borrowId/request/:action
 
+//Deconnexion de l'utilisateur thierry
+// POST /logout
 
 /* Jeux de test partie Nico */
 
@@ -123,30 +139,96 @@ Jeux de test :
 // Liste des elements diponibles sur le réseau
 // GET /elements
 
-// Utilisateur pierre fait une demande à l'utilisateur pierre
-// POST /user/:id/borrows   ?? Comment reconnais t on l'id user?
+// Utilisateur Nico fait une demande à l'utilisateur Pierre
+// POST /user/:id/borrows
 
 {
-"elementId":"" // Et l'element id? Il faut l'avoir en get non?
+"elementId":""
 }
 
-// Liste des elements diponibles sur le réseau
-// GET /elements
+//Deconnexion nico
+// POST /logout
 
-// Utilisateur Nico fait une demande à l'utilisateur pierre
-// POST /user/:id/borrows   ?? Comment reconnais t on l'id user?
-
+// Login Pierre
+// POST /Login
 {
-"elementId":"" // Et l'element id? Il faut l'avoir en get non?
+"mail":"pflauder@gmail.com",
+"password":"pierre"
 }
 
-// Accepter l'emprunt avec un autre user
+// Accepter l'emprunt avec user pierre
+// PUT /borrows/:borrowId/request/:action
 
+//Deconnexion pierre
+// POST /logout
 
-// Faire le retour de l'objet
+// Connexion avec l'utilisateur Nicolas
+// POST /login
+{
+"mail":"njouraud@hotmail.fr",
+"password":"nico"
+}
+
+// Faire la demande de retour de l'objet
 // POST /borrows/:id/restore
 
-// Accepter le retour de l'objet
+
+//Deconnexion Nico
+// POST /logout
+
+// Login Pierre
+// POST /Login
+{
+"mail":"pflauder@gmail.com",
+"password":"pierre"
+}
+
+// Pierre accepte le retour de l'emprunt
+// PUT /borrows/:id/restore/:action    (action = valid)
+
+//Deconnexion pierre
+// POST /logout
+
+// Connexion avec l'utilisateur Nicolas
+// POST /login
+{
+"mail":"njouraud@hotmail.fr",
+"password":"nico"
+}
+
+
+
+// Utilisateur Nico fait une demande à l'utilisateur Thierry
+// POST /user/:id/borrows
+{
+"elementId":""
+}
+
+//Deconnexion nico
+// POST /logout
+
+// Connexion de l'utilisateur thierry
+// POST /login
+{
+"mail":"thierry.allardsaintalbin@gmail.com",
+"password":"thierry"
+}
+
+// Thierry accepte l'emprunt
+// PUT /borrows/:borrowId/request/:action
+
+//Deconnexion Thierry
+// POST /logout
+
+// Connexion avec l'utilisateur Nicolas
+// POST /login
+{
+"mail":"njouraud@hotmail.fr",
+"password":"nico"
+}
+
+
+
 
 
 // Demande d'historique des emprunts de l'utilisateur Nico
@@ -157,7 +239,6 @@ Jeux de test :
 // Demande d'historique des prets de l'utilisateur Nico
 // GET /borrows/lending
 
-// Demande de Restore
 
 // Déconnexion de l'utilisateur Nico
 // POST /logout
