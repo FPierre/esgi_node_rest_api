@@ -38,7 +38,7 @@ Jeux de test :
 }
 
 // Login Pierre
-// POST /Login
+// POST /login
 {
 "mail":"pflauder@gmail.com",
 "password":"pierre"
