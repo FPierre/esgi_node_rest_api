@@ -11,71 +11,70 @@ module.exports = function(server) {
             return;
         }
 
-        var OtherUser = {};
+        var User      = {};
+        var OwnerUser = {};
         var Element   = {};
-        var Owner     = {};
 
-        OtherUser._id = req.params.id;
+        User._id      = req.session.userId;
+        OwnerUser._id = req.params.id;
         Element._id   = req.body.elementId;
-        Owner._id     = req.session.userId;
 
-        // Si l'utilisateur qui demande et qui reçoit la demande d'emprunt est le même
-        if (OtherUser._id == Owner._id) {
+        // Si l'utilisateur qui demande est celui qui reçoit la demande d'emprunt
+        if (User._id == OwnerUser._id) {
             res.send(400, {errorMessage: 'Same users requested'});
 
             return;
         }
 
         // Cherche l'utilisateur à qui la demande est adressée
-        server.models.User.findOne({_id: OtherUser._id}, function(err, data) {
+        server.models.User.findOne({_id: OwnerUser._id}, function(err, data) {
             if (err) {
                 res.send(500, {errorMessage: 'Oops, something wrong with the server'});
 
                 return;
             }
             else {
-                OtherUser = data;
+                OwnerUser = data;
 
-                if (OtherUser._id != undefined) {
-                    // Cherche l'élément pour lequel la demande d'emprunt est faite
-                    server.models.Element.findOne({_id: Element._id}, function(err, data) {
-                        if (err) {
-                            res.send(500, {errorMessage: 'Oops, something wrong with the server'});
-
-                            return;
-                        }
-                        else {
-                            Element = data;
-
-                            if (Element._id != undefined) {
-                                console.log('Creating a borrow with OtherUser._id = ' + OtherUser._id + ', OwnerId = ' + Owner._id +
-                                    ' and Element.id = ' + Element._id);
-                                var newBorrow = {};
-
-                                newBorrow.ElementId = Element._id;
-                                newBorrow.UserId    = OtherUser._id;
-                                newBorrow.OwnerId   = Owner._id;
-                                newBorrow.Status    = 'requesting';
-
-                                var newBorrow = server.models.Borrow(newBorrow);
-
-                                newBorrow.save(function(err, borrow) {
-                                    if (err) {
-                                        res.send(500, {errorMessage: 'Oops, something wrong with the server'});
-                                    }
-                                    else {
-                                        res.send(200, borrow.toJSON());
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-                else {
+                if (OwnerUser._id == undefined) {
                     res.send(400, {errorMessage: 'No user found'});
 
                     return;
                 }
+
+                // Cherche l'élément pour lequel la demande d'emprunt est faite
+                server.models.Element.findOne({_id: Element._id}, function(err, data) {
+                    if (err) {
+                        res.send(500, {errorMessage: 'Oops, something wrong with the server'});
+
+                        return;
+                    }
+                    else {
+                        Element = data;
+
+                        if (Element._id != undefined) {
+                            console.log('Creating a borrow with OwnerUser._id = ' + OwnerUser._id + ', User._id = ' + User._id +
+                                ' and Element.id = ' + Element._id);
+                            var newBorrow = {};
+
+                            newBorrow.ElementId = Element._id;
+                            newBorrow.UserId    = User._id;
+                            newBorrow.OwnerId   = OwnerUser._id;
+                            newBorrow.Status    = 'requesting';
+
+                            var newBorrow = server.models.Borrow(newBorrow);
+
+                            newBorrow.save(function(err, borrow) {
+                                if (err) {
+                                    res.send(500, {errorMessage: 'Oops, something wrong with the server'});
+                                }
+                                else {
+                                    res.send(200, borrow.toJSON());
+                                }
+                            });
+                        }
+                    }
+                });
             }
         });
     });
