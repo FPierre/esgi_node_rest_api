@@ -5,14 +5,18 @@ module.exports = function(server) {
     server.get('/borrows/:type',server.middleware.isLoggedIn, function(req, res) {
         // On récupère notre id
         var userId = req.session.userId;
+        console.log("userId");
+        console.log(userId);
         var type = req.params.type;
         var params = {};
-        params.OwnerId = userId;
+        params.UserId = userId;
         if(type === "lending") {
+            console.log("lending");
             // Si la donnée est différente de null
             params.LendDate = {$exists: true};
             params.Status = "closed";
         } else {
+            console.log("borrowing");
             // Si la donnée est égale à null
             params.Status = "validated";
             params.LendDate = null;
@@ -23,6 +27,7 @@ module.exports = function(server) {
 
         function handleQueryResponse(err,data)
         {
+            console.log("data");
             console.log(data);
             if(err)
             {

@@ -7,6 +7,7 @@ module.exports = function(server) {
         var borrow;
         // On récupère l'emprunt concerné
         borrowId = req.params.id;
+        console.log(borrowId);
         if (borrowId) {
             // On récupère l'emprunt concerné via son id
             server.models.Borrow.findById(borrowId,handleQueryResponse);
@@ -45,19 +46,23 @@ module.exports = function(server) {
         }
     });
     server.put('/borrows/:id/restore/:action',server.middleware.isLoggedIn, function(req, res) {
-        var borrowId;
+        var Borrow = {};
         var borrow;
         var choice;
-
+        var myUserId = req.session.userId;
+        console.log("myUserId");
+        console.log(myUserId);
         // On récupère l'emprunt concerné
-        borrowId = req.params.id;
         // On recupere l'action a effectuer
+        Borrow._id = req.params.id;
+        console.log("borrowId");
+        console.log(Borrow._id);
         choice = req.params.action;
-        if (borrowId) {
-            // On recupere notre emprunt par son id
-            server.models.Borrow.findById(borrowId,handleQueryResponse);
+        if (Borrow._id) {
 
-            function handleQueryResponse(err,data)
+            // On recupere notre emprunt par son id
+            server.models.Borrow.findOne({_id: Borrow._id},handleQueryResponsePut);
+            function handleQueryResponsePut(err,data)
             {
                 if(err)
                 {
@@ -68,10 +73,17 @@ module.exports = function(server) {
                 }
                 else {
                     borrow = data;
+                    console.log("BORROW DATA : ");
+                    console.log(borrow);
+                    if(borrow.OwnerId != myUserId) {
+                        res.send(400, {errorMessage: 'User not allowed to access to this borrow'});
+                        return;
+                    }
                     // On test selon si l'action est valid ou invalid le status de l'emprunt correspondant
                     if (choice == "valid") {
                         borrow.Status = "closed";
-                        borrow.LendDate = Date.now;
+                        var date = Date.now();
+                        borrow.LendDate = date;
                     } else if(choice == "invalid") {
                         borrow.Status = "borrowing";
                     } else {

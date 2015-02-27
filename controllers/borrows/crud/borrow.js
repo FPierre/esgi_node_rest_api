@@ -31,10 +31,10 @@ module.exports = function(server) {
                 console.log(req.session.userId);
 
                 console.log('Borrow UserId :');
-                console.log(Borrow.UserId);
+                console.log(Borrow.OwnerId);
 
                 // Si l'utilisateur qui accepte ou refuse la demande n'est pas le même que celui à la demande est adressée
-                if (req.session.userId != Borrow.UserId) {
+                if (req.session.userId != Borrow.OwnerId) {
                     res.send(400, {errorMessage: 'User not allowed to access to this borrow'});
 
                     return;
