@@ -18,7 +18,7 @@ module.exports = function(server)
         }
         else
         {
-            res.send(400,"Wrong Email");
+            res.send(400,{errorMessage:"you didn't enter an email"});
 
         }
     }
