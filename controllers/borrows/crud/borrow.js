@@ -44,7 +44,8 @@ module.exports = function(server) {
                 if (Borrow._id != undefined) {
                     switch (action) {
                         case 'validated':
-                            Borrow.Status = 'validated';
+                            Borrow.Status     = 'validated';
+                            Borrow.BorrowDate = Date.now();
                             break;
                         case 'refused':
                             Borrow.Status = 'refused';

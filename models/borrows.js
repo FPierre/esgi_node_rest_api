@@ -22,10 +22,15 @@ module.exports = function(server) {
             required: true,
             unique : false
         },
-        BorrowDate: {
+        CreatedDate: {
             type: Date,
             required: true,
             default: Date.now,
+            unique: false
+        },
+        BorrowDate: {
+            type: Date,
+            default: null,
             unique: false
         },
         LendDate: {
